@@ -1,4 +1,4 @@
-import {defineArrayMember, defineField, defineType, validation} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const postType = defineType({
   name: 'post',
@@ -24,7 +24,6 @@ export const postType = defineType({
       name: 'slug',
       type: 'slug',
       options: {source: 'title'},
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'publishedAt',
