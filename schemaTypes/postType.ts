@@ -1,54 +1,54 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const postType = defineType({
-  name: 'post',
   title: 'Post',
+  name: 'post',
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
+      title: 'Author',
       name: 'author',
-      type: 'string',
-      validation: (rule) => rule.required(),
+      type: 'reference',
+      to: [{type: 'user'}],
     }),
     defineField({
-      name: 'likes',
-      type: 'number',
-      initialValue: 0,
-    }),
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      options: {source: 'title'},
-    }),
-    defineField({
-      name: 'publishedAt',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString(),
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'image',
+      title: 'Photo',
+      name: 'photo',
       type: 'image',
     }),
     defineField({
-      name: 'body',
+      title: 'Likes',
+      name: 'likes',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{type: 'user'}],
+        }),
+      ],
+      validation: (rule) => rule.unique(),
     }),
     defineField({
+      title: 'Comments',
       name: 'comments',
       type: 'array',
       of: [
         defineArrayMember({
-          type: 'object',
+          title: 'Comment',
+          name: 'comment',
+          type: 'document',
           fields: [
-            defineField({name: 'name', type: 'string', validation: (rule) => rule.required()}),
-            defineField({name: 'body', type: 'string', validation: (rule) => rule.required()}),
+            defineField({
+              title: 'Author',
+              name: 'author',
+              type: 'reference',
+              to: [{type: 'user'}],
+            }),
+            defineField({
+              title: 'Comment',
+              name: 'comment',
+              type: 'string',
+            }),
           ],
         }),
       ],
