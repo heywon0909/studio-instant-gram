@@ -59,4 +59,10 @@ export const userType = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'username',
+    },
+  },
 })
